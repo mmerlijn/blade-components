@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers":[
-                "mmerlijn\\blade-components\\src\\BladeComponentsServiceProvider"
+                "mmerlijn\\blade-components\\BladeComponentsServiceProvider"
             ]
 
         }
