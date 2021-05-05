@@ -6,19 +6,23 @@ use Illuminate\View\Compilers\BladeCompiler;
 
 class BladeComponentsServiceProvider extends ServiceProvider
 {
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/blade-components.php', 'blade-components');
+    }
+
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
-        $this->loadViewComponentsAs('mm', [
+        $this->loadViewComponentsAs(config('blade-components.prefix'), [
 
             //   Alert::class,
             //   Button::class,
         ]);
+        $this->configureComponents();
+        $this->configurePublishing();
     }
-    public function register()
-    {
-        //$this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'blade-components');
-    }
+
     protected function configureComponents()
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
@@ -34,6 +38,22 @@ class BladeComponentsServiceProvider extends ServiceProvider
     }
     protected function registerComponent(string $component)
     {
-        Blade::component('bladeComponents::components.'.$component, $component,'mm');
+        Blade::component('bladeComponents::components.'.$component, config('blade-components.prefix').'-'.$component);
+    }
+
+    protected function configurePublishing()
+    {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__.'/../config/blade-components.php' => config_path('blade-components.php'),
+        ], 'blade-components-config');
+
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/blade-components'),
+        ], 'blade-components-views');
+
     }
 }
