@@ -1,0 +1,40 @@
+{
+    "name": "mmerlijn/blade-components",
+    "description": "Reusable blade components collection",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "M Merlijn",
+            "email": "menno@mmerlijn.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4|^8.0",
+        "blade-ui-kit/blade-heroicons": "v1.1.0"
+    },
+    "require-dev": {
+        "illuminate/support": "8.x-dev",
+        "orchestra/testbench": "6.x-dev",
+        "phpunit/phpunit": "9.5.x-dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers":[
+                "mmerlijn\\blade-components\\BladeComponentsServiceProvider"
+            ]
+
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "mmerlijn\\bladeComponents\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "mmerlijn\\bladeComponents\\tests\\": "tests"
+        }
+    }
+}
