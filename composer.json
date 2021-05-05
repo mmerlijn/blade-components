@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "mmerlijn\\bladeComponents\\": "src/"
+            "mmerlijn\\blade-components\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "mmerlijn\\bladeComponents\\tests\\": "tests"
+            "mmerlijn\\blade-components\\tests\\": "tests"
         }
     }
 }
