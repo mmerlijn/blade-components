@@ -34,6 +34,6 @@ class BladeComponentsServiceProvider extends ServiceProvider
     }
     protected function registerComponent(string $component)
     {
-        Blade::component('bladeComponents::components.'.$component, 'mm-'.$component,);
+        Blade::component('bladeComponents::components.'.$component, $component,'mm');
     }
 }
