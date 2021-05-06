@@ -13,7 +13,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        //$this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
         $this->loadViewComponentsAs(config('blade-components.prefix'), [
 
             //   Alert::class,
@@ -25,7 +25,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
     protected function configureComponents()
     {
-        $this->callAfterResolving(BladeCompiler::class, function () {
+        //$this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('panel');
             $this->registerComponent('button');
             $this->registerComponent('flash');
@@ -34,7 +34,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
             $this->registerComponent('alert-notice');
             $this->registerComponent('alert-success');
             $this->registerComponent('alert-warning');
-        });
+        //});
     }
     protected function registerComponent(string $component)
     {
