@@ -13,7 +13,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
+        //$this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
         $this->loadViewComponentsAs(config('blade-components.prefix'), [
 
             //   Alert::class,
