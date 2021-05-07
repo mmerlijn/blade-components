@@ -6,10 +6,8 @@ trait HasTheme
 {
     public $theme='default';
 
-    public function getThemeClasses($theme = null)
+    public function getThemeClasses()
     {
-        $theme = $theme ?: $this->theme;
-
-        return config("blade-components.components.{$this->componentName}.themes.".$theme);
+        return config("blade-components.components.".$this->componentName.".themes.".$this->theme);
     }
 }
