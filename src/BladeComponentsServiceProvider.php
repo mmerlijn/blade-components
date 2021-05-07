@@ -15,11 +15,12 @@ class BladeComponentsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
-       $this->loadViewComponentsAs(config('blade-components.prefix'), [
-           \mmerlijn\bladeComponents\View\Components\Badge::class
-           //   Alert::class,
-           //   Button::class,
-       ]);
+//       $this->loadViewComponentsAs(config('blade-components.prefix'), [
+//           \mmerlijn\bladeComponents\View\Components\Badge::class
+//           //   Alert::class,
+//           //   Button::class,
+//       ]);
+        Blade::component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,"bc");
         $this->configurePublishing();
         $this->configureComponents();
 
