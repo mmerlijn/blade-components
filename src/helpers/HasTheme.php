@@ -4,13 +4,12 @@ namespace mmerlijn\bladeComponents\helpers;
 
 trait HasTheme
 {
-    public $theme;
+    public $theme='default';
 
-    public function getThemeClasses($key = null)
+    public function getThemeClasses($theme = null)
     {
-        return $this->theme;
-        $key = $key ? $this->theme.'.'.$key : $this->theme;
+        $theme = $theme ?: $this->theme;
 
-        return config("blade-components.components.{$this->componentName}.themes.".$key);
+        return config("blade-components.components.{$this->componentName}.themes.".$theme);
     }
 }
