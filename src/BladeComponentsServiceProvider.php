@@ -24,12 +24,13 @@ class BladeComponentsServiceProvider extends ServiceProvider
         $this->configurePublishing();
         $this->configureComponents();
         Blade::component(\mmerlijn\bladeComponents\View\Components\Badge::class,'badge','bc');
+        Blade::component(\mmerlijn\bladeComponents\View\Components\Panel::class,'panel','bc');
     }
 
     protected function configureComponents()
     {
         $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) {
-            $this->registerComponent('panel');
+            //$this->registerComponent('panel');
             $this->registerComponent('button');
             $this->registerComponent('flash');
             $this->registerComponent('modal');
