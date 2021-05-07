@@ -15,11 +15,11 @@ class BladeComponentsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
-//       $this->loadViewComponentsAs(config('blade-components.prefix'), [
-//           \Badge::class
-//           //   Alert::class,
-//           //   Button::class,
-//       ]);
+       $this->loadViewComponentsAs(config('blade-components.prefix'), [
+           \mmerlijn\bladeComponents\View\Components\Badge::class
+           //   Alert::class,
+           //   Button::class,
+       ]);
         $this->configurePublishing();
         $this->configureComponents();
 
@@ -37,7 +37,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
             $this->registerComponent('alert-success');
             $this->registerComponent('alert-warning');
 
-            $blade->component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,config('blade-components.prefix'));
+            //$blade->component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,config('blade-components.prefix'));
             //$this->registerComponent('badge');
         });
     }
