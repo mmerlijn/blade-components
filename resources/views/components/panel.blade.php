@@ -1,5 +1,5 @@
 <div {{ $attributes->merge(['class' => 'shadow-lg rounded-lg overflow-auto'])->filter(fn($v,$k)=>$k !=='title') }}>
-    <div class="bg-gray-300">
+    <div class="{{$getThemeClasses}}">
         <h1 class="text-xl font-bold py-2 px-4">{{$title}}</h1>
     </div>
 <div class="p-4">
