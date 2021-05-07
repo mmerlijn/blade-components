@@ -15,6 +15,7 @@ class Badge extends Component
 
     public function render()
     {
+
         return view('bladeComponents::components.badge');
     }
 }
