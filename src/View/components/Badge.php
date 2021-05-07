@@ -8,6 +8,7 @@ class Badge extends Component
 {
     use HasTheme;
 
+    public $var="bg-red-300";
     public function __construct($theme = 'default')
     {
         $this->theme = $theme;
