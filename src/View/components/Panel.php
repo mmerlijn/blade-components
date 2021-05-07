@@ -10,6 +10,8 @@ class Panel extends \Illuminate\View\Component
 {
     use HasTheme;
 
+    public $title;
+
     public function __construct($title,$theme='default'){
         $this->title = $title;
         $this->theme = $theme;
