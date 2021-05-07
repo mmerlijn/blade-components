@@ -1,4 +1,5 @@
 <?php
+namespace mmerlijn\bladeComponents\View\Components;
 
 use Illuminate\View\Component;
 use mmerlijn\bladeComponents\helpers\HasTheme;
