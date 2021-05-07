@@ -12,7 +12,8 @@ class ComponentsTest extends TestCase
     public function test_components_are_loaded()
     {
         //$this->assertTrue(View::exists('mm-panel'));
-        $this->assertTrue(View::exists('x-mm-panel'));
+        $this->assertTrue(View::exists('x-bladeComponents::panel'));
+        $this->assertTrue(View::exists('x-bc-panel'));
     }
     public function test_panel_component(){
         $view = $this->blade(
