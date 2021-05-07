@@ -1,6 +1,5 @@
 <?php
 namespace mmerlijn\bladeComponents;
-use Badge;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;

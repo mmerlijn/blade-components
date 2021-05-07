@@ -9,9 +9,11 @@ use mmerlijn\bladeComponents\helpers\HasTheme;
 class Panel extends \Illuminate\View\Component
 {
     use HasTheme;
-    /**
-     * @inheritDoc
-     */
+
+    public function __construct($title,$theme='default'){
+        $this->title = $title;
+        $this->theme = $theme;
+    }
     public function render()
     {
         return view('bladeComponents::components.panel');
