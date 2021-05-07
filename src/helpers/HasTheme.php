@@ -8,6 +8,6 @@ trait HasTheme
 
     public function getThemeClasses()
     {
-        return config("blade-components.components.".__CLASS__.".themes.".$this->theme)?:'name:'.$this->componentName;
+        return config("blade-components.components.".__CLASS__.".themes.".$this->theme)?:'name:'.__CLASS__;
     }
 }
