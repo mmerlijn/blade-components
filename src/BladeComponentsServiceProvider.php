@@ -23,7 +23,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
         $this->configurePublishing();
         $this->configureComponents();
-        Blade::component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class);
+        Blade::component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,config('blade-components.prefix'));
     }
 
     protected function configureComponents()
@@ -37,7 +37,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
             $this->registerComponent('alert-notice');
             $this->registerComponent('alert-success');
             $this->registerComponent('alert-warning');
-            $this->registerComponent('badge');
+            //$this->registerComponent('badge');
 
             //$blade->component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,config('blade-components.prefix'));
             //$this->registerComponent('badge');
