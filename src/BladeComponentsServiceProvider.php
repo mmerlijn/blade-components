@@ -36,6 +36,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
             $this->registerComponent('alert-notice');
             $this->registerComponent('alert-success');
             $this->registerComponent('alert-warning');
+
             $blade->component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,config('blade-components.prefix'));
             //$this->registerComponent('badge');
         });
