@@ -14,11 +14,11 @@ class BladeComponentsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'bladeComponents');
-        $this->loadViewComponentsAs(config('blade-components.prefix'), [
-            \Badge::class
-            //   Alert::class,
-            //   Button::class,
-        ]);
+//       $this->loadViewComponentsAs(config('blade-components.prefix'), [
+//           \Badge::class
+//           //   Alert::class,
+//           //   Button::class,
+//       ]);
         $this->configurePublishing();
         $this->configureComponents();
 
