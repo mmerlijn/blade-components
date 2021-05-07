@@ -20,10 +20,10 @@ class BladeComponentsServiceProvider extends ServiceProvider
 //           //   Alert::class,
 //           //   Button::class,
 //       ]);
-        Blade::component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,"bc");
+
         $this->configurePublishing();
         $this->configureComponents();
-
+        Blade::component('badge',\mmerlijn\bladeComponents\View\Components\Badge::class,"bc");
     }
 
     protected function configureComponents()
