@@ -23,7 +23,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
         $this->configurePublishing();
         $this->configureComponents();
-        Blade::component(\mmerlijn\bladeComponents\View\Components\Badge::class,'badge',config('blade-components.prefix'));
+        Blade::component(\mmerlijn\bladeComponents\View\Components\Badge::class,'badge');
     }
 
     protected function configureComponents()
