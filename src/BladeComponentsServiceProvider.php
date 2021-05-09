@@ -22,22 +22,34 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
         $this->configurePublishing();
         $this->configureComponents();
-        Blade::component(\mmerlijn\bladeComponents\View\Components\Badge::class,'badge',config('blade-components.prefix'));
-        Blade::component(\mmerlijn\bladeComponents\View\Components\Panel::class,'panel',config('blade-components.prefix'));
+        //Blade::component(\mmerlijn\bladeComponents\View\Components\Badge::class,'badge',config('blade-components.prefix'));
     }
 
     protected function configureComponents()
     {
         $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) {
             //$this->registerComponent('panel');
-            $this->registerComponent('button');
-            $this->registerComponent('flash');
-            $this->registerComponent('modal');
+
             $this->registerComponent('alert-danger');
             $this->registerComponent('alert-notice');
             $this->registerComponent('alert-success');
             $this->registerComponent('alert-warning');
+            $this->registerComponent('badge');
+            $this->registerComponent('button');
+            $this->registerComponent('checkbox');
+            $this->registerComponent('dropdown');
+            $this->registerComponent('flash');
             $this->registerComponent('input');
+            $this->registerComponent('modal');
+            $this->registerComponent('nav-link');
+            $this->registerComponent('notice');
+            $this->registerComponent('panel');
+            $this->registerComponent('radio');
+            $this->registerComponent('select');
+            $this->registerComponent('table');
+            $this->registerComponent('td');
+            $this->registerComponent('th');
+            $this->registerComponent('validation-errors');
         });
     }
     protected function registerComponent(string $component)

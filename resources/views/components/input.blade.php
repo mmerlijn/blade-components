@@ -1,8 +1,9 @@
-@props(['type' => 'text', 'name','label','value'])
-<div {{ $attributes->merge(['class' => 'col-span-6 sm:col-span-4'])}} >
-    @if($label)
-    <label for="{{$name}}" class="block text-sm font-medium text-gray-700">{{$label}}</label>
-    @endif
-    <input type="{{$type??'text'}}" name="{{$name}}" id="{{$name}}" value="{{old($name)?:$value??''}}" autocomplete="off"
-           class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md @error($name) border border-red-600 @enderror">
-</div>
+@props(['type' => 'text', 'name','value'=>null,'disabled' => false])
+@php
+    $classes = $errors->first($name)
+    ? "mt-1 focus:ring-indigo-200 focus:border-indigo-300 focus:ring-opacity-50 block w-full shadow-sm sm:text-sm rounded-md border-red-600"
+    : "mt-1 focus:ring-indigo-200 focus:border-indigo-300 focus:ring-opacity-50 block w-full shadow-sm sm:text-sm rounded-md border-gray-300 ";
+@endphp
+<input type="{{$type??'text'}}" name="{{$name}}" id="{{$name}}" value="{{old($name)?:$value??''}}"
+       autocomplete="off" {{ $disabled ? 'disabled' : '' }}
+        {!! $attributes->merge(['class' => $classes]) !!}>

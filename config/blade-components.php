@@ -10,13 +10,5 @@
             'indigo' => ['background'=>'bg-indigo-100','text'=>'text-indigo-800'],
             'purple' => ['background'=>'bg-purple-100','text'=>'text-purple-800'],
             'pink' => ['background'=>'bg-pink-100','text'=>'text-pink-800'],
-        ],
-        'components'=>[
-            'badge' => [
-                'class' => 'inline-flex items-center px-2.5 py-0.5 rounded-full font-medium'
-            ],
-            'panel'=>[
-
-            ]
         ]
     ];
