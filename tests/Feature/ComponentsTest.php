@@ -44,6 +44,12 @@ class ComponentsTest extends TestCase
 
 
     }
+    public function test_checkbox_component()
+    {
+        $label_text = 'Accept agreement';
+        $view = $this->blade('<x-bc-checkbox :name="$name" label="Accept agreement"/>',['name'=>$label_text]);
+        $view->assertSee($label_text);
+    }
     public function test_input_with_and_without_errors()
     {
         $view = $this->withViewErrors(['email_address'=>'required'])
