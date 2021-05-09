@@ -26,9 +26,10 @@ class InstallCommand extends \Illuminate\Console\Command
                 ] + $packages;
         });
 
-        if (! Str::contains(file_get_contents(resource_path('js/app.js')), "'blade-components/flash'")) {
-            (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL."require('blade-components/flash');");
+        if (! Str::contains(file_get_contents(resource_path('js/app.js')), "'./blade-components/flash'")) {
+            (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL."require('./blade-components/flash');");
         }
+        $this->comment('Installation completed');
         $this->comment('Please execute "npm install && npm run dev" to build your assets.');
     }
 
