@@ -23,12 +23,6 @@ In the layout file place at the bottom of the body-tag
 <x-bc-flash/>
 ```
 
-In the layout file use (if it is not already presented)
-```css
-@stack('scripts')
-```
-after loading app.js
-
 Now the flash messages could be called by 
 ```php
 session()->flash('success','The messages to display');

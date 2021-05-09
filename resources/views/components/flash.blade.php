@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<script nonce="{{$nonce}}">
+<script {{$nonce?"nonce='$nonce'":''}}>
     {{--Aanroepen door: session()->flash('succes','bericht');--}}
             @if(session('success'))
         window.onload = function () {
