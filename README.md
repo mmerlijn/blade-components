@@ -5,7 +5,9 @@ composer require mmerlijn/blade-components
 ## Publishing config file
 TODO php artisan vendor:publish -tag=blade-components-config
 
-## Table example
+## Components
+### table example
+#### Use
 ```html
         <x-bc-table>
             <x-slot name="header">
@@ -22,4 +24,60 @@ TODO php artisan vendor:publish -tag=blade-components-config
             @endforeach
 
         </x-bc-table>
+```
+#### Generate
+```html
+<div class="flex flex-col">
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-green-100">
+                    <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">name</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">age</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">country</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-800">Bob</td> 
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-800">20</td> 
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-800"></td>  
+                    </tr>
+                    <tr class="bg-green-50">
+                    Elis
+</td>                                            <td class="px-6 py-4 whitespace-nowrap text-gray-800">
+    23
+</td>                                            <td class="px-6 py-4 whitespace-nowrap text-gray-800">
+    NL
+</td>                                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+```
+### Radio example
+#### Use
+```html
+<x-bc-radio name="sex" :options="['m'=>'Male','f'=>'Female']"/>
+```
+#### Generate
+```html
+<fieldset>
+    <div class="flex items-center">
+         <input id="m" name="sex" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+         <label for="m" class="ml-3 block text-sm font-medium text-gray-700">
+         Male
+         </label>
+    </div>
+    <div class="flex items-center">
+         <input id="f" name="sex" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+         <label for="f" class="ml-3 block text-sm font-medium text-gray-700">
+         Female
+         </label>
+    </div>
+</fieldset>
 ```
