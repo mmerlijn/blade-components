@@ -8,10 +8,36 @@ TODO php artisan vendor:publish -tag=blade-components-config
 ## Tailwind 2
 All components use tailwind 2
 
+## AplineJs
+For some components alpineJs is needed
+- flash
+
 ### Theme option
 Theme attribute is allowed in almost every component. The theme values could be customised in the config file.
 
 ## Example Components
+### flash
+#### Use
+In the layout file place at the bottom of the body-tag
+```html
+<x-bc-flash/>
+```
+
+In the layout file use (if it is not already presented)
+```css
+@stack('scripts')
+```
+after loading app.js
+
+Now the flash messages could be called by 
+```php
+session()->flash('success','The messages to display');
+session()->flash('danger','The messages to display');
+session()->flash('waring','The messages to display');
+session()->flash('notice','The messages to display');
+```
+
+
 ### panel
 #### Use
 ```html
@@ -21,8 +47,16 @@ Theme attribute is allowed in almost every component. The theme values could be 
 ```
 #### Result
 ```html
-
+<div class="shadow-lg rounded-lg overflow-auto">
+    <div class="bg-indigo-100">
+        <h1 class="text-xl font-bold py-2 px-4 text-indigo-800">Hello world</h1>
+    </div>
+    <div class="p-4">
+        This is the content of the panel component
+    </div>
+</div>
 ```
+
 ### table
 #### Use
 ```html
