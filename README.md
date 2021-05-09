@@ -5,8 +5,25 @@ composer require mmerlijn/blade-components
 ## Publishing config file
 TODO php artisan vendor:publish -tag=blade-components-config
 
-## Components
-### table example
+## Tailwind 2
+All components use tailwind 2
+
+### Theme option
+Theme attribute is allowed in almost every component. The theme values could be customised in the config file.
+
+## Example Components
+### panel
+#### Use
+```html
+        <x-bc-panel title="Hello world" theme="indigo">
+            This is the content of the panel component
+        </x-bc-panel>
+```
+#### Result
+```html
+
+```
+### table
 #### Use
 ```html
         <x-bc-table>
@@ -33,25 +50,23 @@ TODO php artisan vendor:publish -tag=blade-components-config
             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-green-100">
-                    <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">name</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">age</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">country</th>
-                    </tr>
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">age</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-green-800">country</th>
+                        </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                    <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-800">Bob</td> 
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-800">20</td> 
-                    <td class="px-6 py-4 whitespace-nowrap text-gray-800"></td>  
-                    </tr>
-                    <tr class="bg-green-50">
-                    Elis
-</td>                                            <td class="px-6 py-4 whitespace-nowrap text-gray-800">
-    23
-</td>                                            <td class="px-6 py-4 whitespace-nowrap text-gray-800">
-    NL
-</td>                                    </tr>
+                        <tr >
+                             <td class="px-6 py-4 whitespace-nowrap text-gray-800">Bob</td>
+                             <td class="px-6 py-4 whitespace-nowrap text-gray-800">20</td>
+                             <td class="px-6 py-4 whitespace-nowrap text-gray-800">US</td>
+                        </tr>
+                         <tr class=bg-green-50>
+                             <td class="px-6 py-4 whitespace-nowrap text-gray-800">Elis</td>
+                             <td class="px-6 py-4 whitespace-nowrap text-gray-800">23</td>
+                             <td class="px-6 py-4 whitespace-nowrap text-gray-800">NL</td>
+                         </tr>
                     </tbody>
                 </table>
             </div>
@@ -59,7 +74,21 @@ TODO php artisan vendor:publish -tag=blade-components-config
     </div>
 </div>
 ```
-### Radio example
+
+### Checkbox
+#### Use
+```html
+<x-bc-checkbox label="Solved" name="solution"/>
+```
+#### Result
+```html
+<div class="flex items-center">
+    <input name="solution" id="solution"
+           type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+    <label class="ml-3 block text-sm font-medium text-gray-700" for="solution">Solved</label>
+</div>
+```
+### Radio
 #### Use
 ```html
 <x-bc-radio name="sex" :options="['m'=>'Male','f'=>'Female']"/>
