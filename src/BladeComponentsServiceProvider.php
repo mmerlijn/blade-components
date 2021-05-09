@@ -71,5 +71,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views' => resource_path('views/vendor/blade-components'),
         ], 'blade-components-views');
 
+        $this->publishes([__DIR__.'/../resources/js' => resource_path('js/vendor/blade-components')],'blade-components-js');
+
     }
 }

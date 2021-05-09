@@ -2,8 +2,11 @@
 
 composer require mmerlijn/blade-components
 
-## Publishing config file
-TODO php artisan vendor:publish -tag=blade-components-config
+## Publishing
+### config file
+php artisan vendor:publish -tag=blade-components-config
+### components views
+php artisan vendor:publish -tag=blade-components-views
 
 ## Tailwind 2
 All components use tailwind 2
