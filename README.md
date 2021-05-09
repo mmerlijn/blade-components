@@ -1,18 +1,40 @@
 # Installation
 
+```shell
 composer require mmerlijn/blade-components
+```
+To publish the config file and add js components (required for some components)
+```shell
+install:blade-components
 
-## Publishing
+npm install
+npm run dev
+#or
+npm run prod
+```
+
+## Customisation
+
 ### config file
+```shell
 php artisan vendor:publish -tag=blade-components-config
+```
+
 ### components views
+```shell
 php artisan vendor:publish -tag=blade-components-views
+```
+
 
 ## Tailwind 2
 All components use tailwind 2
 
 ## AplineJs
 For some components alpineJs is needed
+Add to resources/js/app.js
+require('alpinejs');
+
+
 - flash
 
 ### Theme option

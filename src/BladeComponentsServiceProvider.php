@@ -22,6 +22,7 @@ class BladeComponentsServiceProvider extends ServiceProvider
 
         $this->configurePublishing();
         $this->configureComponents();
+        $this->configureCommands();
         //Blade::component(\mmerlijn\bladeComponents\View\Components\Badge::class,'badge',config('blade-components.prefix'));
     }
 
@@ -71,7 +72,22 @@ class BladeComponentsServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views' => resource_path('views/vendor/blade-components'),
         ], 'blade-components-views');
 
-        $this->publishes([__DIR__.'/../resources/js' => resource_path('js/vendor/blade-components')],'blade-components-js');
+        $this->publishes([__DIR__.'/../resources/js' => resource_path('js/blade-components')],'blade-components-js');
 
+    }
+    /**
+     * Configure the commands offered by the application.
+     *
+     * @return void
+     */
+    protected function configureCommands()
+    {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->commands([
+            Console\InstallCommand::class,
+        ]);
     }
 }
