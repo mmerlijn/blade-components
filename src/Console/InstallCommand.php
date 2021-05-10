@@ -50,7 +50,7 @@ class InstallCommand extends \Illuminate\Console\Command
             $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", $path);
         }
 
-        if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew')) {
+        if (!file_exists(base_path("/webpack.mix.js")) ) { //or $this->option('renew')
             $this->info('Add if not exists webpack.mix.js');
             copy(__DIR__ . '/../../stubs/webpack.mix.js', base_path('webpack.mix.js'));
         }
