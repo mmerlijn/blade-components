@@ -10,13 +10,14 @@ use Illuminate\Support\Str;
 class InstallCommand extends \Illuminate\Console\Command
 {
 
-    protected $signature = "blade-components:install {--renew=: replace all existing files}
+    protected $signature = "blade-components:install {--renew= : replace all existing files}
     {--composer=global : Absolute path to the Composer binary which should be used to install packages}";
 
     protected $description = "Install blade-components resources";
 
     public function handle()
     {
+        $this->info("renew option is: ".$this->option("renew"));
         $this->info('Installing Blade-components package...');
 
         $this->info('Publishing javascripts and configuration...');
