@@ -45,7 +45,7 @@ class InstallCommand extends \Illuminate\Console\Command
             (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/flash');");
         }
 
-        if(is_dir(resource_path('view/layouts'))){
+        if(is_dir(resource_path('view/layouts/'))){
             foreach (scandir(resource_path('view/layouts')) as $layout){
                 if($layout!="." or $layout!=".."){
                     if (!Str::contains(file_get_contents(resource_path('view/layouts/'.$layout)), "<x-bc-flash")) {
@@ -54,6 +54,8 @@ class InstallCommand extends \Illuminate\Console\Command
                     }
                 }
             }
+        }else{
+            $this->info('No layout directory found: add manually <x-bc-flash/> just before </body>');
         }
 
 
