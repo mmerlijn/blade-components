@@ -52,8 +52,19 @@ class InstallCommand extends \Illuminate\Console\Command
                         $this->info('Add flash components to layout: '.$layout);
                         $this->replaceInFile("</body>", "<x-bc-flash/>" . PHP_EOL . "</body>", resource_path('views/layouts/'.$layout));
                     }
+                    if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "@stack('scripts')")) {
+                        $this->info('Add @stack(\'scripts\') to layout: '.$layout);
+                        $this->replaceInFile("<x-bc-flash/>", "@stack('scripts')" . PHP_EOL . "<x-bc-flash/>", resource_path('views/layouts/'.$layout));
+                    }
+                    if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "@stack('styles')")) {
+                        $this->info('Add @stack(\'styles\') to layout: '.$layout);
+                        $this->replaceInFile("</head>", "@stack('styles')" . PHP_EOL . "</head>", resource_path('views/layouts/'.$layout));
+                    }
                 }
             }
+
+            //@stack('scripts')
+            //@stack('styles')
         }else{
             $this->info('No layout directory found: add manually <x-bc-flash/> just before </body>');
         }

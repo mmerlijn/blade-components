@@ -44,7 +44,7 @@ Theme attribute is allowed in almost every component. The theme values could be 
 ## Example Components
 ### flash
 #### Use
-In every layout file place at the bottom of the body-tag
+In every layout file place at the bottom of the body-tag (install wil take care off)
 ```html
 <x-bc-flash/>
 ```
