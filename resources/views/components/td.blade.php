@@ -1,2 +1,2 @@
-@props(['theme'=>'default'])
-<td {{$attributes->merge(['class'=> "px-6 py-4 whitespace-nowrap ".\mmerlijn\bladeComponents\helpers\BladeTheme::getThemeText($theme) ])}}>{{$slot}}</td>
+@props(['color'=>'gray'])
+<td {{$attributes->merge(['class'=> "px-6 py-4 whitespace-nowrap text-".$color."-800"])}}>{{$slot}}</td>

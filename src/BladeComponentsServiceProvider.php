@@ -2,6 +2,7 @@
 namespace mmerlijn\bladeComponents;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 
 class BladeComponentsServiceProvider extends ServiceProvider
@@ -29,28 +30,11 @@ class BladeComponentsServiceProvider extends ServiceProvider
     protected function configureComponents()
     {
         $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) {
-            //$this->registerComponent('panel');
-
-            $this->registerComponent('alert-danger');
-            $this->registerComponent('alert-notice');
-            $this->registerComponent('alert-success');
-            $this->registerComponent('alert-warning');
-            $this->registerComponent('badge');
-            $this->registerComponent('button');
-            $this->registerComponent('checkbox');
-            $this->registerComponent('dropdown');
-            $this->registerComponent('flash');
-            $this->registerComponent('input');
-            $this->registerComponent('modal');
-            $this->registerComponent('nav-link');
-            $this->registerComponent('notice');
-            $this->registerComponent('panel');
-            $this->registerComponent('radio');
-            $this->registerComponent('select');
-            $this->registerComponent('table');
-            $this->registerComponent('td');
-            $this->registerComponent('th');
-            $this->registerComponent('validation-errors');
+            foreach (scandir(__DIR__."/../resources/views/components") as $file) {
+                if (!in_array($file, [".", ".."])) {
+                    $this->registerComponent(Str::before($file,"."));
+                }
+            }
         });
     }
     protected function registerComponent(string $component)

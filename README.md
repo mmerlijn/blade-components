@@ -37,19 +37,23 @@ All components use tailwind 2
 For some components alpineJs is needed, the install option will automatically install this node package
 ###### Required for:
 - flash
+- dropdown
 
-### Theme option
-Theme attribute is allowed in almost every component. The theme values could be customised in the config file.
+### Color option
+Color attribute is allowed in almost every component. All tailwind primary colors are available.
+<span style="color:gray">gray</span>, 
+<span style="color:red">red</span>, 
+<span style="color:yellow">yellow</span>, 
+<span style="color:green">green</span>, 
+<span style="color:blue">blue</span>, 
+<span style="color:indigo">indigo</span>, 
+<span style="color:purple">purple</span>, 
+<span style="color:pink">pink</span>
 
 ## Example Components
 ### flash
 #### Use
-In every layout file place at the bottom of the body-tag (install wil take care off)
-```html
-<x-bc-flash/>
-```
-
-Now the flash messages could be called by 
+Flash messages could be called by
 ```php
 session()->flash('success','The messages to display');
 session()->flash('danger','The messages to display');
@@ -57,11 +61,46 @@ session()->flash('waring','The messages to display');
 session()->flash('notice','The messages to display');
 ```
 
+#### Install
+In every layout file place at the bottom of the body-tag (install wil take care off)
+```html
+<x-bc-flash/>
+```
+add blade-components/flash.js to app.js (install wil take care off)
 
+
+### Modal
+#### Use
+```html
+<a href="#modal-modal1">Show modal</a>
+
+<x-bc-modal name="modal1">Modal content</x-bc-modal>
+```
+#### Install
+In every layout file place in the header @stack('styles') and at the bottom of the body-tag @stack('scripts') (install wil take care off)
+```html
+...
+@stack('styles')
+</head>
+...
+@stack('scripts')
+</body>
+```
+### badge
+#### use
+````html
+<x-bc-badge color="blue">100</x-bc-badge>
+````
+
+### button
+####use
+```html
+<x-bc-button color="blue">Klik me!</x-bc-button>
+```
 ### panel
 #### Use
 ```html
-        <x-bc-panel title="Hello world" theme="indigo">
+        <x-bc-panel title="Hello world" color="indigo">
             This is the content of the panel component
         </x-bc-panel>
 ```
@@ -77,8 +116,18 @@ session()->flash('notice','The messages to display');
 </div>
 ```
 
+### alert
+Use
+```html
+<x-bc-alert-danger>Don't do that!</x-bc-alert-danger>
+<x-bc-alert-notice>Happy Birthday!</x-bc-alert-notice>
+<x-bc-alert-success>Thanks for submitting</x-bc-alert-success>
+<x-bc-alert-warning>Are you sure?</x-bc-alert-warning>
+```
+
 ### table
 #### Use
+table accepts color attribute
 ```html
         <x-bc-table>
             <x-slot name="header">
@@ -131,6 +180,7 @@ session()->flash('notice','The messages to display');
 
 ### Checkbox
 #### Use
+checkbox accepts color attribute
 ```html
 <x-bc-checkbox label="Solved" name="solution"/>
 ```
@@ -142,12 +192,14 @@ session()->flash('notice','The messages to display');
     <label class="ml-3 block text-sm font-medium text-gray-700" for="solution">Solved</label>
 </div>
 ```
+
 ### Radio
 #### Use
+radio accepts color attribute
 ```html
 <x-bc-radio name="sex" :options="['m'=>'Male','f'=>'Female']"/>
 ```
-#### Generate
+#### Result
 ```html
 <fieldset>
     <div class="flex items-center">

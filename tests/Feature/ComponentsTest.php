@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use mmerlijn\bladeComponents\BladeComponentsServiceProvider;
 use mmerlijn\bladeComponents\helpers\BladeTheme;
@@ -20,25 +21,19 @@ class ComponentsTest extends TestCase
         return [BladeComponentsServiceProvider::class];
     }
 
-    public function test_components_are_loaded()
+    public function test_all_components_are_loaded()
     {
-        //$this->assertTrue(View::exists('mm-panel'));
-        //$this->assertTrue(View::exists('x-bladeComponents::panel'));
-        //$this->assertTrue(View::exists('panel'));
-        $this->assertTrue(View::exists('bladeComponents::components.panel'));
-        $this->assertTrue(View::exists('bladeComponents::components.badge'));
-        $this->assertTrue(View::exists('bladeComponents::components.table'));
-
-    }
-    public function test_themes(){
-        $this->assertSame('bg-red-100', BladeTheme::getThemeBackground('red'));
-        $this->assertSame('text-red-800', BladeTheme::getThemeText('red'));
+        foreach (scandir(__DIR__."/../../resources/views/components") as $file){
+            if(!in_array($file, [".",".."])){
+                $this->assertTrue(View::exists('bladeComponents::components.'.Str::before($file,".")));
+            }
+        }
     }
     public function test_various_components(){
-        $view = $this->blade('<x-bc-th>hallo</x-bc-th>',[]);
+        $view = $this->blade('<x-'.config('blade-components.prefix').'-th>hallo</x-'.config('blade-components.prefix').'-th>',[]);
         $view->assertSee('hallo');
 
-        $view = $this->blade('<x-bc-panel title="See me" theme="red">This is text</x-bc-panel>');
+        $view = $this->blade('<x-'.config('blade-components.prefix').'-panel title="See me" color="red">This is text</x-'.config('blade-components.prefix').'-panel>');
         $view->assertSee('See me')
          ->assertSee('bg-red-100');
 
@@ -47,19 +42,19 @@ class ComponentsTest extends TestCase
     public function test_checkbox_component()
     {
         $label_text = 'Accept agreement';
-        $view = $this->blade('<x-bc-checkbox :name="$name" label="Accept agreement"/>',['name'=>$label_text]);
+        $view = $this->blade('<x-'.config('blade-components.prefix').'-checkbox :name="$name" label="Accept agreement"/>',['name'=>$label_text]);
         $view->assertSee($label_text);
     }
     public function test_input_with_and_without_errors()
     {
         $view = $this->withViewErrors(['email_address'=>'required'])
-            ->blade('<x-bc-input :name="$name" type="email"/>',['name'=>'email_address']);
+            ->blade('<x-'.config('blade-components.prefix').'-input :name="$name" type="email"/>',['name'=>'email_address']);
         $view->assertSee("email_address")
             ->assertSee("border-red-600")
             ->assertDontSee("border-gray-300");
 
         $view = $this->withViewErrors(['lastname'=>'required'])
-            ->blade('<x-bc-input :name="$name" type="email"/>',['name'=>'email_address']);
+            ->blade('<x-'.config('blade-components.prefix').'-input :name="$name" type="email"/>',['name'=>'email_address']);
         $view->assertSee("email_address")
             ->assertSee("border-gray-300")
             ->assertDontSee("border-red-600");

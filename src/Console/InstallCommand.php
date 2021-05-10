@@ -48,13 +48,13 @@ class InstallCommand extends \Illuminate\Console\Command
         if(is_dir(resource_path('views/layouts'))){
             foreach (scandir(resource_path('views/layouts')) as $layout){
                 if(!in_array($layout,[".",".."])){
-                    if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "<x-bc-flash")) {
+                    if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "<x-".config('blade-components.prefix')."-flash")) {
                         $this->info('Add flash components to layout: '.$layout);
-                        $this->replaceInFile("</body>", "<x-bc-flash/>" . PHP_EOL . "</body>", resource_path('views/layouts/'.$layout));
+                        $this->replaceInFile("</body>", "<x-".config('blade-components.prefix')."-flash/>" . PHP_EOL . "</body>", resource_path('views/layouts/'.$layout));
                     }
                     if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "@stack('scripts')")) {
                         $this->info('Add @stack(\'scripts\') to layout: '.$layout);
-                        $this->replaceInFile("<x-bc-flash/>", "@stack('scripts')" . PHP_EOL . "<x-bc-flash/>", resource_path('views/layouts/'.$layout));
+                        $this->replaceInFile("<x-".config('blade-components.prefix')."-flash/>", "@stack('scripts')" . PHP_EOL . "<x-".config('blade-components.prefix')."-flash/>", resource_path('views/layouts/'.$layout));
                     }
                     if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "@stack('styles')")) {
                         $this->info('Add @stack(\'styles\') to layout: '.$layout);
@@ -63,10 +63,8 @@ class InstallCommand extends \Illuminate\Console\Command
                 }
             }
 
-            //@stack('scripts')
-            //@stack('styles')
         }else{
-            $this->info('No layout directory found: add manually <x-bc-flash/> just before </body>');
+            $this->info('No layout directory found: add manually <x-'.config('blade-components.prefix').'-flash/> just before </body>');
         }
 
 
