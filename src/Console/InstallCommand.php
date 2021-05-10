@@ -72,8 +72,10 @@ class InstallCommand extends \Illuminate\Console\Command
             $this->info('Add tailwind.config.js');
             copy(__DIR__ . '/../../stubs/tailwind.config.js', base_path('tailwind.config.js'));
         } else {
-            $this->info('Update tailwind.config.js');
-            $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", base_path('tailwind.config.js'));
+            if (!Str::contains(file_get_contents(base_path("/tailwind.config.js")), "'./vendor/mmerlijn/blade-components/**/*.blade.php'")) {
+                $this->info('Update tailwind.config.js');
+                $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", base_path('tailwind.config.js'));
+            }
         }
 
         if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew') ) {
