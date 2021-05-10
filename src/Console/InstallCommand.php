@@ -36,10 +36,24 @@ class InstallCommand extends \Illuminate\Console\Command
                 ] + $packages;
         });
 
-
+        if (!Str::contains(file_get_contents(resource_path('js/app.js')), "require('alpinejs');")) {
+            $this->info('Add alpinejs to app.js');
+            (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('alpinejs');");
+        }
         if (!Str::contains(file_get_contents(resource_path('js/app.js')), "'./blade-components/flash'")) {
             $this->info('Add flash.js to app.js');
             (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/flash');");
+        }
+
+        if(is_dir(resource_path('view/layouts'))){
+            foreach (scandir(resource_path('view/layouts')) as $layout){
+                if($layout!="." or $layout!=".."){
+                    if (!Str::contains(file_get_contents(resource_path('view/layouts/'.$layout)), "<x-bc-flash")) {
+                        $this->info('Add flash components to layout: '.$layout);
+                        $this->replaceInFile("</body>", "<x-bc-flash/>" . PHP_EOL . "</body>", resource_path('view/layouts/'.$layout));
+                    }
+                }
+            }
         }
 
 

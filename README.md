@@ -3,10 +3,14 @@
 ```shell
 composer require mmerlijn/blade-components
 ```
-To publish the config file and add js components (required for some components)
+To publish the config file and add js components (required for some components) config will always be overwritten
 ```shell
-install:blade-components
+php artisan blade-components:install
 
+# --renew option for overwriting existing files
+php artisan blade-components:install --renew
+
+#run after
 npm install
 npm run dev
 #or
@@ -30,11 +34,8 @@ php artisan vendor:publish -tag=blade-components-views
 All components use tailwind 2
 
 ## AplineJs
-For some components alpineJs is needed
-Add to resources/js/app.js
-require('alpinejs');
-
-
+For some components alpineJs is needed, the install option will automatically install this node package
+###### Required for:
 - flash
 
 ### Theme option
@@ -43,7 +44,7 @@ Theme attribute is allowed in almost every component. The theme values could be 
 ## Example Components
 ### flash
 #### Use
-In the layout file place at the bottom of the body-tag
+In every layout file place at the bottom of the body-tag
 ```html
 <x-bc-flash/>
 ```
