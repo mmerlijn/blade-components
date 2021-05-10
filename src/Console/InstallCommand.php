@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class InstallCommand extends \Illuminate\Console\Command
 {
 
-    protected $signature = "blade-components:install {--renew=false: replace all existing files}
+    protected $signature = "blade-components:install {--renew: replace all existing files}
     {--composer=global : Absolute path to the Composer binary which should be used to install packages}";
 
     protected $description = "Install blade-components resources";
@@ -50,7 +50,7 @@ class InstallCommand extends \Illuminate\Console\Command
             $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", $path);
         }
 
-        if (!file_exists(base_path("/webpack.mix.js")) ) { //or $this->option('renew')
+        if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew') ) {
             $this->info('Add if not exists webpack.mix.js');
             copy(__DIR__ . '/../../stubs/webpack.mix.js', base_path('webpack.mix.js'));
         }
