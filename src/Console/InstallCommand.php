@@ -47,7 +47,7 @@ class InstallCommand extends \Illuminate\Console\Command
 
         if(is_dir(resource_path('views/layouts'))){
             foreach (scandir(resource_path('views/layouts')) as $layout){
-                if($layout!="." or $layout!=".."){
+                if(!in_array($layout,[".",".."])){
                     if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "<x-bc-flash")) {
                         $this->info('Add flash components to layout: '.$layout);
                         $this->replaceInFile("</body>", "<x-bc-flash/>" . PHP_EOL . "</body>", resource_path('views/layouts/'.$layout));
