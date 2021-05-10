@@ -10,15 +10,21 @@ use Illuminate\Support\Str;
 class InstallCommand extends \Illuminate\Console\Command
 {
 
-    protected $signature = "blade-components:install {--renew: replace all existing files}";
+    protected $signature = "blade-components:install {--renew=?: replace all existing files}
+    {--composer=global : Absolute path to the Composer binary which should be used to install packages}";
 
     protected $description = "Install blade-components resources";
 
     public function handle()
     {
+        $this->info('Installing Blade-components package...');
+
+        $this->info('Publishing javascripts and configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'blade-components-js', '--force' => true]);
         $this->callSilent('vendor:publish', ['--tag' => 'blade-components-config', '--force' => true]);
 
+
+        $this->info('Update node package.json');
         // NPM Packages...
         $this->updateNodePackages(function ($packages) {
             return ['@tailwindcss/forms' => '^0.3.1',
@@ -29,15 +35,19 @@ class InstallCommand extends \Illuminate\Console\Command
                 ] + $packages;
         });
 
+        $this->info('Add flash.js to app.js');
         if (!Str::contains(file_get_contents(resource_path('js/app.js')), "'./blade-components/flash'")) {
             (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/flash');");
         }
+
+        $this->info('Add or update tailwind.config.js');
         if (!file_exists(base_path("/tailwind.config.js")) or $this->option("renew")) {
             copy(__DIR__ . '/../../stubs/tailwind.config.js', base_path('tailwind.config.js'));
         } else {
             //add blade components to purge
             $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", $path);
         }
+        $this->info('Add if not exists webpack.mix.js');
         if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew')) {
             copy(__DIR__ . '/../../stubs/webpack.mix.js', base_path('webpack.mix.js'));
         }
