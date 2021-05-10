@@ -1,5 +1,10 @@
-@props(['name','options'=>[],'value'=>'','color'=>'indigo'])
-<select id="{{$name}}" name="{{$name}}" autocomplete="off" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-{{$color}}-500 focus:border-{{$color}}-500 sm:text-sm">
+@props(['name','options'=>[],'value'=>''])
+@php
+    $classes = $errors->first($name)
+    ? "border-red-600"
+    : "border-gray-300 ";
+@endphp
+<select id="{{$name}}" name="{{$name}}" autocomplete="off" {{ $attributes->merge(['class' => $classes]) }}>
     @foreach($options as $k=>$option)
         <option value="{{$k}}" @if($value==$k) selected @endif>{{$option}}</option>
     @endforeach

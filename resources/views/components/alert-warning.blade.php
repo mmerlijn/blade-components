@@ -1,7 +1,7 @@
 <!-- Toast Notification Warning -->
-<div class="flex items-center bg-orange-400 border-l-4 border-orange-700 py-2 px-3 shadow-md mb-2 rounded">
+<div class="flex items-center bg-yellow-500 border-l-4 border-yellow-700 py-2 px-3 shadow-md mb-2 rounded">
     <!-- icons -->
-    <div class="text-orange-500 rounded-full bg-white mr-3">
+    <div class="text-yellow-600 rounded-full bg-white mr-3">
         <svg width="1.8em" height="1.8em" viewBox="0 0 16 16" class="bi bi-exclamation" fill="currentColor"
              xmlns="http://www.w3.org/2000/svg">
             <path

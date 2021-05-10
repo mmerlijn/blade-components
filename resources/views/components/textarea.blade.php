@@ -1,0 +1,2 @@
+@props(['name','disabled' => false,'cols'=>30,'rows'=>4])
+<textarea name="{{$name}}" id="{{$name}}" cols="{{$cols}}" rows="{{$rows}}" {{ $attributes->merge(['class' => $classes]) }}>{{$slot}}</textarea>

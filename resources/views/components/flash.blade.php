@@ -18,7 +18,7 @@
                     :class="{
                     'bg-green-500 border-green-700': flash.type === 'success',
                     'bg-blue-500 border-blue-700': flash.type === 'notice',
-                    'bg-orange-400 border-orange-700': flash.type === 'warning',
+                    'bg-yellow-400 border-yellow-700': flash.type === 'warning',
                     'bg-red-500 border-red-700': flash.type === 'danger',
                     }"
             >
@@ -26,7 +26,7 @@
                      :class="{
                     'text-green-500 ': flash.type === 'success',
                     'text-blue-500': flash.type === 'notice',
-                    'text-orange-400': flash.type === 'warning',
+                    'text-yellow-600': flash.type === 'warning',
                     'text-red-500': flash.type === 'danger',
                     }"
                 >

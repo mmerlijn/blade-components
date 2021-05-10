@@ -1,10 +1,9 @@
-@props(['name','options'=> [],'align'=>'vertical','color'=>'indigo'])
+@props(['name','options'=> [],'align'=>'vertical'])
 <fieldset>
     @if($align=='vertical')
         @foreach($options as $k=>$option)
             <div class="flex items-center">
-                <input id="{{$k}}" name="{{$name}}" type="radio"
-                       class="focus:ring-{{$color}}-500 h-4 w-4 text-{{$color}}-600 border-gray-300">
+                <input id="{{$k}}" name="{{$name}}" type="radio" {{$attributes}}>
                 <label for="{{$k}}" class="ml-3 block text-sm font-medium text-gray-700">
                     {{$option}}
                 </label>
@@ -13,8 +12,7 @@
     @else
         <div class="flex items-center">
             @foreach($options as $k=>$option)
-                <input id="{{$k}}" name="{{$name}}" type="radio"
-                       class="focus:ring-{{$color}}-500 h-4 w-4 text-{{$color}}-600 border-gray-300">
+                <input id="{{$k}}" name="{{$name}}" type="radio" {{$attributes}}>
                 <label for="{{$k}}" class="ml-3 block text-sm font-medium text-gray-700">
                     {{$option}}
                 </label>
