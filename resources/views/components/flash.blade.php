@@ -41,7 +41,7 @@
 
 <script {{$nonce?"nonce='$nonce'":''}}>
     {{--Aanroepen door: session()->flash('succes','bericht');--}}
-            @if(session('success'))
+    @if(session('success'))
         window.onload = function () {
         flashSuccess('{{session('success')}}');
     }

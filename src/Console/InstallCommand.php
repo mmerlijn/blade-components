@@ -35,20 +35,23 @@ class InstallCommand extends \Illuminate\Console\Command
                 ] + $packages;
         });
 
-        $this->info('Add flash.js to app.js');
+
         if (!Str::contains(file_get_contents(resource_path('js/app.js')), "'./blade-components/flash'")) {
+            $this->info('Add flash.js to app.js');
             (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/flash');");
         }
 
-        $this->info('Add or update tailwind.config.js');
+
         if (!file_exists(base_path("/tailwind.config.js")) or $this->option("renew")) {
+            $this->info('Add tailwind.config.js');
             copy(__DIR__ . '/../../stubs/tailwind.config.js', base_path('tailwind.config.js'));
         } else {
-            //add blade components to purge
+            $this->info('Update tailwind.config.js');
             $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", $path);
         }
-        $this->info('Add if not exists webpack.mix.js');
+
         if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew')) {
+            $this->info('Add if not exists webpack.mix.js');
             copy(__DIR__ . '/../../stubs/webpack.mix.js', base_path('webpack.mix.js'));
         }
 
