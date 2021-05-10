@@ -17,7 +17,7 @@ class InstallCommand extends \Illuminate\Console\Command
 
     public function handle()
     {
-        $this->info("renew option is: " . $this->option("renew"));
+        $this->info("renew option is: ".$this->option("renew"));
         $this->info('Installing Blade-components package...');
 
         $this->info('Publishing javascripts and configuration...');
@@ -45,13 +45,17 @@ class InstallCommand extends \Illuminate\Console\Command
             (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/flash');");
         }
 
-        foreach (scandir(resource_path('view/layouts')) as $layout) {
-            if ($layout != "." or $layout != "..") {
-                if (!Str::contains(file_get_contents(resource_path('view/layouts/' . $layout)), "<x-bc-flash")) {
-                    $this->info('Add flash components to layout: ' . $layout);
-                    $this->replaceInFile("</body>", "<x-bc-flash/>" . PHP_EOL . "</body>", resource_path('view/layouts/' . $layout));
+        if(is_dir(resource_path('views/layouts'))){
+            foreach (scandir(resource_path('views/layouts')) as $layout){
+                if($layout!="." or $layout!=".."){
+                    if (!Str::contains(file_get_contents(resource_path('views/layouts/'.$layout)), "<x-bc-flash")) {
+                        $this->info('Add flash components to layout: '.$layout);
+                        $this->replaceInFile("</body>", "<x-bc-flash/>" . PHP_EOL . "</body>", resource_path('views/layouts/'.$layout));
+                    }
                 }
             }
+        }else{
+            $this->info('No layout directory found: add manually <x-bc-flash/> just before </body>');
         }
 
 
@@ -63,7 +67,7 @@ class InstallCommand extends \Illuminate\Console\Command
             $this->replaceInFile("'./resources/views/**/*.blade.php',", "'./resources/views/**/*.blade.php'," . PHP_EOL . "'./vendor/mmerlijn/blade-components/**/*.blade.php',", base_path('tailwind.config.js'));
         }
 
-        if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew')) {
+        if (!file_exists(base_path("/webpack.mix.js")) or $this->option('renew') ) {
             $this->info('Add if not exists webpack.mix.js');
             copy(__DIR__ . '/../../stubs/webpack.mix.js', base_path('webpack.mix.js'));
         }
