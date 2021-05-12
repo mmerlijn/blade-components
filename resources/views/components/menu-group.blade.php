@@ -1,3 +1,3 @@
-<div class="py-1" role="none">
+<div class="py-1">
     {{$slot}}
 </div>
