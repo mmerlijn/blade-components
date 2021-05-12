@@ -216,3 +216,18 @@ radio accepts color attribute
     </div>
 </fieldset>
 ```
+
+### Menu
+#### Use
+```html
+    <x-bc-menu>
+        <x-bc-menu-group>
+            <x-bc-menu-item href="#"><x-heroicon-o-user-circle class="inline-block w-5 h-5 text-gray-500 mr-4"/>Profile</x-bc-menu-item>
+            <x-bc-menu-item href="#"><x-heroicon-o-adjustments class="inline-block w-5 h-5 text-gray-500 mr-4"/>Settings</x-bc-menu-item>
+            <x-bc-menu-item post="true" action="#"><x-heroicon-o-logout class="inline-block w-5 h-5 text-gray-500 mr-4"/>Logout</x-bc-menu-item>
+        </x-bc-menu-group>
+        <x-bc-menu-group>
+            <x-bc-menu-item href="#">other</x-bc-menu-item>
+        </x-bc-menu-group>
+    </x-bc-menu>
+```

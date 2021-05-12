@@ -32,7 +32,7 @@ class InstallCommand extends \Illuminate\Console\Command
                     '@tailwindcss/typography' => '^0.4.0',
                     'alpinejs' => '^2.7.3',
                     'postcss-import' => '^14.0.1',
-                    'tailwindcss' => '^2.0.1',
+                    'tailwindcss' => '^2.1.2',
                 ] + $packages;
         });
 

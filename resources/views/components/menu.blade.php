@@ -4,10 +4,12 @@
         x-data="{ open: {{$open?'true':'false'}} }"
         x-ref="dropdown"
         @click.away="open=false"
-        @click="!open"
-        class="relative inline-block text-left">
+        @click="open=!open"
+        @mouseenter="open=!open"
+        @mouseleave="open=!open"
+        class="relative inline-block text-left ">
     <div>
-        <div class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+        <div class="inline-flex justify-center w-full px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
             Options
             <!-- Heroicon name: solid/chevron-down -->
             <svg class="-mr-1 ml-2 h-5 w-5"
@@ -21,7 +23,9 @@
             </svg>
         </div>
     </div>
-    <div x-show="open" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+    <div
+            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95"
+            x-show="open" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100">
         {{$slot}}
     </div>
 </div>
