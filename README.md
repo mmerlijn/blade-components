@@ -220,7 +220,7 @@ radio accepts color attribute
 ### Menu
 #### Use
 ```html
-    <x-bc-menu>
+    <x-bc-menu title="Profile">
         <x-bc-menu-group>
             <x-bc-menu-item href="#"><x-heroicon-o-user-circle class="inline-block w-5 h-5 text-gray-500 mr-4"/>Profile</x-bc-menu-item>
             <x-bc-menu-item href="#"><x-heroicon-o-adjustments class="inline-block w-5 h-5 text-gray-500 mr-4"/>Settings</x-bc-menu-item>

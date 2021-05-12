@@ -1,4 +1,4 @@
-@props(['open'=>false])
+@props(['open'=>false,'title'])
 <div
 
         x-data="{ open: {{$open?'true':'false'}} }"
@@ -10,7 +10,7 @@
         class="relative inline-block text-left ">
     <div>
         <div class="inline-flex justify-center w-full px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-            Options
+            {{$title}}
             <!-- Heroicon name: solid/chevron-down -->
             <svg class="-mr-1 ml-2 h-5 w-5"
                     xmlns="http://www.w3.org/2000/svg"
