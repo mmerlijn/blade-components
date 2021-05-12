@@ -9,7 +9,7 @@
                     </div>
                 @endif
                 <div class="block">
-                    <div class="ml-10 flex items-baseline space-x-4">
+                    <div class="ml-4 flex items-baseline space-x-2">
                         {{$slot}}
                     </div>
                 </div>
