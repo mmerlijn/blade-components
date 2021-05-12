@@ -15,16 +15,7 @@
             </svg>
         </div>
     </div>
-
     <div role="menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-        <x-bc-menu-group>
-            <x-bc-menu-item href="#">Account settings</x-bc-menu-item>
-            <x-bc-menu-item href="#">Support</x-bc-menu-item>
-            <x-bc-menu-item href="#">Licence</x-bc-menu-item>
-            <x-bc-menu-item post="true" action="#">Sign out</x-bc-menu-item>
-        </x-bc-menu-group>
-        <x-bc-menu-group>
-            <x-bc-menu-item href="#">Account settings</x-bc-menu-item>
-        </x-bc-menu-group>
+        {{$slot}}
     </div>
 </div>
