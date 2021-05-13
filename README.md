@@ -240,7 +240,8 @@ params:
  - value comma separated (optional)  
  - color (optional)
  - placeholder (optional)
+ - display (optional) default value will be shown in dropdown (key and value will be replaced in html string)
 
 ```html
-<x-bc-tag-input color="yellow" name="landen" :options="['nl'=>'Nederland','du'=>'Duitsland','b'=>'Belgie']" value="nl,bl"></x-bc-tag-input>
+<x-bc-tag-input color="yellow" name="landen" :options="['nl'=>'Nederland','du'=>'Duitsland','b'=>'Belgie']" value="nl,bl"  display="<strong>key:</strong> value"></x-bc-tag-input>
 ```
