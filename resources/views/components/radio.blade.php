@@ -13,7 +13,7 @@
         <div class="flex items-center">
             @foreach($options as $k=>$option)
                 <input id="{{$k}}" name="{{$name}}" type="radio" {{$attributes}} {{ $disabled ? 'disabled' : '' }}>
-                <label for="{{$k}}" class="ml-3 block text-sm font-medium text-gray-700">
+                <label for="{{$k}}" class="mx-3 block text-sm font-medium text-gray-700">
                     {{$option}}
                 </label>
             @endforeach
