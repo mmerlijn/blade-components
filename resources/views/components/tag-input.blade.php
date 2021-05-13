@@ -32,7 +32,7 @@
         </div>
         <div>
     <span class="rounded-md shadow-sm h-full w-full">
-                      <button
+                      <div
                               x-ref="button"
                               @click="toggleListboxVisibility()"
                               :aria-expanded="open"
@@ -58,7 +58,7 @@
                                           stroke-linejoin="round"></path>
                                 </svg>
                             </span>
-                      </button>
+                      </div>
                 </span>
         </div>
     </div>
