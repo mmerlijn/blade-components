@@ -231,3 +231,16 @@ radio accepts color attribute
         </x-bc-menu-group>
     </x-bc-menu>
 ```
+
+### Tag-input
+#### Use
+params:
+ - name
+ - options (array key=>value)
+ - value comma separated (optional)  
+ - color (optional)
+ - placeholder (optional)
+
+```html
+<x-bc-tag-input color="yellow" name="landen" :options="['nl'=>'Nederland','du'=>'Duitsland','b'=>'Belgie']" value="nl,bl"></x-bc-tag-input>
+```

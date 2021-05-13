@@ -40,9 +40,9 @@ class InstallCommand extends \Illuminate\Console\Command
             $this->info('Add alpinejs to app.js');
             (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('alpinejs');");
         }
-        if (!Str::contains(file_get_contents(resource_path('js/app.js')), "'./blade-components/flash'")) {
+        if (!Str::contains(file_get_contents(resource_path('js/app.js')), "'./blade-components/bladeComponents'")) {
             $this->info('Add flash.js to app.js');
-            (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/flash');");
+            (new Filesystem)->append(resource_path('js/app.js'), PHP_EOL . "require('./blade-components/bladeComponents');");
         }
 
         if(is_dir(resource_path('views/layouts'))){
