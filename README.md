@@ -236,12 +236,35 @@ radio accepts color attribute
 #### Use
 params:
  - name
- - options (array key=>value)
- - value comma separated (optional)  
+ - options 
+    - array contains objects
+   ```json
+      [{k:100,l:'nl',d:'Netherlands'},{k:101,l:'du',d:'Germany'}]
+      #or without key
+      [{l:'nl',d:'Netherlands'},{l:'du',d:'Germany'}]
+      ```
+    - k=key, l=label, d=full display option
+    - the 'k' is optional, if not present 'l' will be used
+ - value (optional) 
+   - comma separated label (l)    TODO: comma seperated key (k) if not presented label (l) 
  - color (optional)
+   - label color
  - placeholder (optional)
- - display (optional) default value will be shown in dropdown (key and value will be replaced in html string)
+   - default: Select...
+ - key (optional)
+   - property label for key default k
+ - label (optional)
+   - property label for label default l
+ - display (optional)
+   - property label for display default d
+   - display value will be searched 
+
 
 ```html
-<x-bc-tag-input color="yellow" name="countries" :options="['nl'=>'Netherlands','du'=>'Germany','b'=>'Belgium']" value="nl,bl"  display="<strong>key:</strong> value"></x-bc-tag-input>
+<x-bc-tag-input color="yellow" name="countries" options="[{l:'nl',d:'Netherlands'},{l:'du',d:'Germany'},{l:'b',d:'Belgium'}]" value="nl,b"></x-bc-tag-input>
+
+<x-bc-tag-input color="yellow" name="countries" :options="json_encode([['l'=>'nl','d'=>'Netherlands'],['l'=>'du','d'=>'Germany']])"></x-bc-tag-input>
+
+<!-- TODO -->
+<x-bc-tag-input color="yellow" name="landen" options="[{k:100,l:'nl',d:'Netherlands'},{k:101,l:'du',d:'Germany'},{k:102,l:'b',d:'Belgium'}]" value="nl"></x-bc-tag-input>
 ```

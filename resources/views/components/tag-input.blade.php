@@ -1,11 +1,15 @@
-@props(['color'=>'gray','name',"placeholder"=>'Select ...','options'=>[],'value'=>'','display'=>'value'])
+@props(['color'=>'gray','name',"placeholder"=>'Select ...','options'=>[],'value'=>'','display'=>'d','label'=>'l'])
 
 <div
-        x-data="tagInputHandler({ data: { @foreach ($options as $k=>$item) {{$k}}:'{{$item}}', @endforeach }
+        x-data="tagInputHandler2({ data: {{$options}}
         , emptyOptionsMessage: 'No results found.'
         , name: '{{$name}}'
         , value: '{{$value}}'
-        , placeholder: '{{$placeholder}}' })"
+        , placeholder: '{{$placeholder}}'
+        , key: '{{$key??$label}}'
+        , label: '{{$label}}'
+        , display: '{{$display}}'
+         })"
         x-init="init()"
         @click.away="closeListbox()"
         @keydown.escape="closeListbox()"
@@ -80,7 +84,7 @@
                 tabindex="-1"
                 class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none leading-5"
         >
-            <template x-for="(key, index) in Object.keys(options)" :key="index">
+            <template x-for="(item, index) in options" :key="index">
                 <li
                         :id="name + 'Option' + focusedOptionIndex"
                         @click="selectOption()"
@@ -91,18 +95,144 @@
                         :class="{ 'text-white bg-indigo-600': index === focusedOptionIndex, 'text-gray-900': index !== focusedOptionIndex }"
                         class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9"
                 >
-                                <span x-html="'{{str_replace(['key','value'],["'+Object.keys(options)[index]+'","'+Object.values(options)[index]+'"],$display)}}'"
-                                      :class="{ 'font-semibold': index === focusedOptionIndex, 'font-normal': index !== focusedOptionIndex }"
-                                      class="block font-normal truncate"
+                                <span
+                                        {{-- x-html="'{{str_replace(['key','value'],["'+Object.keys(options)[index]+'","'+Object.values(options)[index]+'"],$display)}}'" --}}
+                                        x-text="item.{{$display}}"
+                                        :class="{ 'font-semibold': index === focusedOptionIndex, 'font-normal': index !== focusedOptionIndex }"
+                                        class="block font-normal truncate"
                                 ></span>
                 </li>
             </template>
 
             <div
-                    x-show="! Object.keys(options).length"
+                    x-show="!options.length"
                     x-text="emptyOptionsMessage"
                     class="px-3 py-2 text-gray-900 cursor-default select-none"></div>
         </ul>
     </div>
     <input type="hidden" x-model="selected.join(',')" name="{{$name}}">
 </div>
+<script>
+    window.tagInputHandler2 = function(config) {
+        return {
+            data: config.data,
+
+            emptyOptionsMessage: config.emptyOptionsMessage ?? 'No results match your search.',
+
+            focusedOptionIndex: null,
+
+            name: config.name,
+
+            open: false,
+
+            options: [],
+
+            placeholder: config.placeholder ?? 'Select an option',
+
+            search: '',
+
+            value: config.value,
+
+            selected: config.value.split(','), //[], //selected items
+
+            k: config.key??'l',
+            l: config.label??'l',
+            d: config.display ??'d',
+
+            closeListbox: function () {
+                this.open = false
+
+                this.focusedOptionIndex = null
+
+                this.search = ''
+            },
+
+            focusNextOption: function () {
+                if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
+
+                if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) return
+
+                this.focusedOptionIndex++
+
+                this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+                    block: "center",
+                })
+            },
+
+            focusPreviousOption: function () {
+                if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
+
+                if (this.focusedOptionIndex <= 0) return
+
+                this.focusedOptionIndex--
+
+                this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+                    block: "center",
+                })
+            },
+
+            init: function () {
+                this.options = this.data
+
+                this.restoreOptions()
+
+                // filter selected items for existence in options
+                this.selected = this.data.reduce((result=[],dataItem)=>{
+                    if(this.selected.includes(dataItem[this.k])){
+                        result.push(dataItem[this.k])
+                    }
+                    return result
+                },[])
+
+                this.$watch('search', ((value) => {
+                    if (!this.open || !value) return this.restoreOptions()
+
+                    this.options = this.data
+                        .reduce((result=[],dataItem) => {
+                            if(!this.selected.includes(dataItem[this.k]) && dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
+                                result.push(dataItem)
+                            }
+                            return result
+                        }, [])
+
+                }))
+
+            },
+
+            selectOption: function () {
+                if (!this.open) return this.toggleListboxVisibility()
+                this.selected.push(this.options[this.focusedOptionIndex][this.k])
+                this.restoreOptions()
+                this.closeListbox()
+            },
+            removeItem: function(index){
+                if(this.open) this.closeListbox()
+                this.selected.splice(index,1)
+                this.restoreOptions()
+            },
+            restoreOptions: function(){
+                this.options = this.data.reduce((result=[],dataItem)=>{
+                    if(!this.selected.includes(dataItem[this.k])){
+                        result.push(dataItem)
+                    }
+                    return result
+                },[])
+
+            },
+            toggleListboxVisibility: function () {
+                if (this.open) return this.closeListbox()
+
+                if (this.focusedOptionIndex < 0) this.focusedOptionIndex = 0
+
+                this.open = true
+
+                this.$nextTick(() => {
+                    this.$refs.search.focus()
+                    this.$refs.listbox.children[this.focusedOptionIndex+1].scrollIntoView({
+                        block: "nearest"
+                    })
+                })
+            },
+        }
+    }
+</script>
