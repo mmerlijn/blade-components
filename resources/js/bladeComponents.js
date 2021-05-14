@@ -59,7 +59,7 @@ window.tagInputHandler = function(config) {
 
         open: false,
 
-        options: {},
+        options: [],
 
         placeholder: config.placeholder ?? 'Select an option',
 
@@ -68,6 +68,10 @@ window.tagInputHandler = function(config) {
         value: config.value,
 
         selected: config.value.split(','), //[], //selected items
+
+        k: config.key??'l',
+        l: config.label??'l',
+        d: config.display ??'d',
 
         closeListbox: function () {
             this.open = false
@@ -78,7 +82,7 @@ window.tagInputHandler = function(config) {
         },
 
         focusNextOption: function () {
-            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
+            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
 
             if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) return
 
@@ -90,7 +94,7 @@ window.tagInputHandler = function(config) {
         },
 
         focusPreviousOption: function () {
-            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
+            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
 
             if (this.focusedOptionIndex <= 0) return
 
@@ -103,27 +107,35 @@ window.tagInputHandler = function(config) {
 
         init: function () {
             this.options = this.data
+
             this.restoreOptions()
-            // TODO: filter selected items existence
+
+            // filter selected items for existence in options
+            this.selected = this.data.reduce((result=[],dataItem)=>{
+                if(this.selected.includes(dataItem[this.k])){
+                    result.push(dataItem[this.k])
+                }
+                return result
+            },[])
 
             this.$watch('search', ((value) => {
-                if (!this.open || !value) return this.options = this.data
+                if (!this.open || !value) return this.restoreOptions()
 
-                this.options = Object.keys(this.data)
-                    .filter((key)=>!this.selected.includes(key))
-                    .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
-                    .reduce((options, key) => {
-                        options[key] = this.data[key]
-                        return options
-                    }, {})
+                this.options = this.data
+                    .reduce((result=[],dataItem) => {
+                        if(!this.selected.includes(dataItem[this.k]) && dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
+                            result.push(dataItem)
+                        }
+                        return result
+                    }, [])
 
             }))
+
         },
 
         selectOption: function () {
             if (!this.open) return this.toggleListboxVisibility()
-
-            this.selected.push(Object.keys(this.options)[this.focusedOptionIndex])
+            this.selected.push(this.options[this.focusedOptionIndex][this.k])
             this.restoreOptions()
             this.closeListbox()
         },
@@ -133,12 +145,13 @@ window.tagInputHandler = function(config) {
             this.restoreOptions()
         },
         restoreOptions: function(){
-            this.options = Object.keys(this.data)
-                .filter((key)=>!this.selected.includes(key))
-                .reduce((options, key) => {
-                    options[key] = this.data[key]
-                    return options
-                }, {})
+            this.options = this.data.reduce((result=[],dataItem)=>{
+                if(!this.selected.includes(dataItem[this.k])){
+                    result.push(dataItem)
+                }
+                return result
+            },[])
+
         },
         toggleListboxVisibility: function () {
             if (this.open) return this.closeListbox()
@@ -149,8 +162,7 @@ window.tagInputHandler = function(config) {
 
             this.$nextTick(() => {
                 this.$refs.search.focus()
-
-                this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+                this.$refs.listbox.children[this.focusedOptionIndex+1].scrollIntoView({
                     block: "nearest"
                 })
             })
