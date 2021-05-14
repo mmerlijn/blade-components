@@ -2,8 +2,8 @@
 
 <div
         x-data="tagInputHandler({ data: {{$options}}
-        , emptyOptionsMessage: 'No results found.'
-        , name: '{{$name}}'
+                , emptyOptionsMessage: 'No results found.'
+                , name: '{{$name}}'
         , value: '{{$value}}'
         , placeholder: '{{$placeholder}}'
         , key: '{{$key??$label}}'
@@ -13,10 +13,10 @@
         x-init="init()"
         @click.away="closeListbox()"
         @keydown.escape="closeListbox()"
-        {{ $attributes->merge(['class' => 'inline-flex relative border border-gray-300 rounded'])}}
+        {{ $attributes->merge(['class' => 'inline-flex items-start relative border border-gray-300 rounded'])}}
 >
-    <div class="flex justify-start">
-        <div class="flex flex-wrap border-top">
+    <div class="flex justify-items-end w-full">
+        <div class="flex flex-wrap max-w-full">
             <template x-for="(item, index) in selected" :key="index">
                 <div class="flex justify-center items-center m-1 py-1 px-2 bg-white rounded-lg text-{{$color}}-700 bg-{{$color}}-100 border border-{{$color}}-300 ">
                     <div class=" leading-none max-w-full flex-initial" x-text="item"></div>
@@ -34,16 +34,15 @@
                 </div>
             </template>
         </div>
-        <div>
-    <span class="rounded-md shadow-sm h-full w-full">
+        <span class="rounded-md shadow-sm h-full w-72">
                       <div
                               x-ref="button"
                               @click="toggleListboxVisibility()"
                               :aria-expanded="open"
                               aria-haspopup="listbox"
-                              class="relative z-0 w-full h-full text-left transition duration-150 ease-in-out bg-white cursor-default"
+                              class="relative z-0 w-full h-full transition duration-150 ease-in-out bg-white cursor-default flex justify-items-end"
                       >
-                            <span x-show="! open" x-text="placeholder" class="pl-4 block truncate w-72 py-1"></span>
+                            <span x-show="! open" x-text="placeholder" class="pl-4 block truncate w-full py-1"></span>
                             <input
                                     x-ref="search"
                                     x-show="open"
@@ -55,7 +54,7 @@
                                     class="rounded h-full w-full pl-4"
                             />
 
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                            <span class="inset-y-0 right-0 flex items-center pr-1 cursor-pointer">
                                 <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="none"
                                      stroke="currentColor">
                                     <path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke-width="1.5" stroke-linecap="round"
@@ -64,8 +63,8 @@
                             </span>
                       </div>
                 </span>
-        </div>
     </div>
+
     <div
             x-show="open"
             x-transition:leave="transition ease-in duration-100"
