@@ -1,5 +1,9 @@
 @props(['color'=>'gray','name',"placeholder"=>'Select ...','options'=>[],'value'=>'','display'=>'d','label'=>'l'])
-
+@php
+    $classes = $errors->first($name)
+    ? "rounded border-red-600"
+    : "rounded border-gray-300 ";
+@endphp
 <div
         x-data="tagInputHandler({ data: {{$options}}
                 , emptyOptionsMessage: 'No results found.'
@@ -13,7 +17,7 @@
         x-init="init()"
         @click.away="closeListbox()"
         @keydown.escape="closeListbox()"
-        {{ $attributes->merge(['class' => 'inline-flex items-start relative border border-gray-300 rounded'])}}
+        {{ $attributes->merge(['class' => 'inline-flex items-start relative '.$classes.' rounded '])}}
 >
     <div class="flex justify-items-end w-full">
         <div class="flex flex-wrap max-w-full">

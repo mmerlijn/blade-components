@@ -1,5 +1,5 @@
 @props(['name','options'=> [],'align'=>'vertical','disabled' => false])
-<fieldset>
+<fieldset {{$errors->first($name)?'class="border border-red-600"':''}}>
     @if($align=='vertical')
         @foreach($options as $k=>$option)
             <div class="flex items-center">

@@ -10,7 +10,7 @@
         </svg>
     </div>
     <!-- message -->
-    <div class="text-white max-w-xs w-full">
+    <div {{ $attributes->merge(['class' => 'text-white w-full'])}}>
         {{$slot}}
     </div>
 </div>
