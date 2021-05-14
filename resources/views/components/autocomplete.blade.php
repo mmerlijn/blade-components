@@ -1,17 +1,19 @@
-@props(['name','options'=>[],'value'=>'','placeholder'=>'Select item'])
+@props(['name','options'=>[],'value'=>'','placeholder'=>'Select item','key'=>'k','display'=>'d'])
 <div
-        x-data="autocompleteHandler({ data: { @foreach ($options as $k=>$item) {{$k}}:'{{$item}}', @endforeach }
+        x-data="autocompleteHandler({ data: {{$options}}
             ,emptyOptionsMessage: 'No results found.'
             , name: '{{$name}}'
+                    , key: '{{$key}}'
+             , display: '{{$display}}'
             , placeholder: '{{$placeholder}}'
              , value: '{{$value}}'})"
         x-init="init()"
         @click.away="closeListbox()"
         @keydown.escape="closeListbox()"
-        class="relative"
+        {{ $attributes->merge(['class' => 'inline-flex items-start relative rounded border-gray-300 rounded '])->only('class')}}
 >
                 <span class="inline-block rounded-md shadow-sm">
-                      <button
+                      <div
                               x-ref="button"
                               @click="toggleListboxVisibility()"
                               :aria-expanded="open"
@@ -20,7 +22,7 @@
                       >
                             <span
                                     x-show="! open"
-                                    x-text="value in options ? options[value] : placeholder"
+                                    x-text="value  ? show.{{$display}} : placeholder"
                                     :class="{ 'text-gray-500': ! (value in options) }"
                                     class="block truncate"
                             ></span>
@@ -43,7 +45,7 @@
                                           stroke-linejoin="round"></path>
                                 </svg>
                             </span>
-                      </button>
+                      </div>
                 </span>
 
     <div
@@ -64,7 +66,7 @@
                 tabindex="-1"
                 class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none sm:text-sm sm:leading-5"
         >
-            <template x-for="(key, index) in Object.keys(options)" :key="index">
+            <template x-for="(item, index) in options" :key="index">
                 <li
                         :id="name + 'Option' + focusedOptionIndex"
                         @click="selectOption()"
@@ -75,13 +77,13 @@
                         :class="{ 'text-white bg-indigo-600': index === focusedOptionIndex, 'text-gray-900': index !== focusedOptionIndex }"
                         class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9"
                 >
-                                <span x-text="Object.values(options)[index]"
+                                <span x-text="item.{{$display}}"
                                       :class="{ 'font-semibold': index === focusedOptionIndex, 'font-normal': index !== focusedOptionIndex }"
                                       class="block font-normal truncate"
                                 ></span>
 
                     <span
-                            x-show="key === value"
+                            x-show="item.{{$key}} === value"
                             :class="{ 'text-white': index === focusedOptionIndex, 'text-indigo-600': index !== focusedOptionIndex }"
                             class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600"
                     >
@@ -100,5 +102,5 @@
                     class="px-3 py-2 text-gray-900 cursor-default select-none"></div>
         </ul>
     </div>
-    <input type="hidden" x-model="value">
+    <input type="hidden" x-model="value" name="{{$name}}"  {{ $attributes->except('class')}}>
 </div>

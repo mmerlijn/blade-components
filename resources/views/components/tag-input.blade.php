@@ -99,7 +99,6 @@
                         class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9"
                 >
                                 <span
-                                        {{-- x-html="'{{str_replace(['key','value'],["'+Object.keys(options)[index]+'","'+Object.values(options)[index]+'"],$display)}}'" --}}
                                         x-text="item.{{$display}}"
                                         :class="{ 'font-semibold': index === focusedOptionIndex, 'font-normal': index !== focusedOptionIndex }"
                                         class="block font-normal truncate"

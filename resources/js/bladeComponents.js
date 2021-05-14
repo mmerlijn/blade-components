@@ -186,13 +186,16 @@ window.autocompleteHandler =     function(config) {
 
         open: false,
 
-        options: {},
+        options: [],
 
         placeholder: config.placeholder ?? 'Select an option',
 
         search: '',
 
         value: config.value,
+        show: {},
+        k: config.key??'k',
+        d: config.display ??'d',
 
         closeListbox: function () {
             this.open = false
@@ -203,7 +206,7 @@ window.autocompleteHandler =     function(config) {
         },
 
         focusNextOption: function () {
-            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
+            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
 
             if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) return
 
@@ -215,7 +218,7 @@ window.autocompleteHandler =     function(config) {
         },
 
         focusPreviousOption: function () {
-            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
+            if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
 
             if (this.focusedOptionIndex <= 0) return
 
@@ -229,25 +232,29 @@ window.autocompleteHandler =     function(config) {
         init: function () {
             this.options = this.data
 
-            if (!(this.value in this.options)) this.value = null
-
+            if(!this.data.some(item => item[this.k] === this.value)){
+                this.value='';
+            }else{
+                this.show = this.data.find(item=>item.k === this.value)
+            }
             this.$watch('search', ((value) => {
                 if (!this.open || !value) return this.options = this.data
 
-                this.options = Object.keys(this.data)
-                    .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
-                    .reduce((options, key) => {
-                        options[key] = this.data[key]
-                        return options
-                    }, {})
+                this.options = this.data
+                    .reduce((result=[],dataItem) => {
+                        if(dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
+                            result.push(dataItem)
+                        }
+                        return result
+                    }, [])
             }))
         },
 
         selectOption: function () {
             if (!this.open) return this.toggleListboxVisibility()
 
-            this.value = Object.keys(this.options)[this.focusedOptionIndex]
-
+            this.value = this.options[this.focusedOptionIndex][this.k]
+            this.show = this.options[this.focusedOptionIndex];
             this.closeListbox()
         },
 
@@ -263,7 +270,7 @@ window.autocompleteHandler =     function(config) {
             this.$nextTick(() => {
                 this.$refs.search.focus()
 
-                this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+                this.$refs.listbox.children[this.focusedOptionIndex+1].scrollIntoView({
                     block: "nearest"
                 })
             })

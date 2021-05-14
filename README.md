@@ -268,3 +268,23 @@ params:
 <!-- TODO -->
 <x-bc-tag-input color="yellow" name="landen" options="[{k:100,l:'nl',d:'Netherlands'},{k:101,l:'du',d:'Germany'},{k:102,l:'b',d:'Belgium'}]" value="nl"></x-bc-tag-input>
 ```
+### Autocomplete (select box)
+#### Use
+params:
+ - name
+ - options (array)
+      ```json
+      [{k:'nl',d:'Netherlands'},{k:'du',d:'Germany'}]
+      ```
+   - k=key, d=full display option
+   - the 'k' is optional, if not present 'l' will be used
+ - value (optional)
+ - placeholder (optional)
+- key (optional)
+   - property label for key default k
+- display (optional)
+   - property label for display default d
+   - display value will be searched
+```html
+<x-bc-autocomplete name="landen" options="[{k:'nl',d:'Nederland'},{k:'du',d:'Duitsland'},{k:'b',d:'Belgie'}]" value="nl" />
+```
