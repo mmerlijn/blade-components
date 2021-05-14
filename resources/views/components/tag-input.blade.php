@@ -5,7 +5,7 @@
     : "rounded border-gray-300 ";
 @endphp
 <div
-        x-data="tagInputHandler2({ data: {!! $options !!}
+        x-data="tagInputHandler2({ data:  {{ $options }}
                 , emptyOptionsMessage: 'No results found.'
                 , name: '{{$name}}'
         , value: '{{$value}}'

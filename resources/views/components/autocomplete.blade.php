@@ -5,7 +5,7 @@
     : "rounded border-gray-300 ";
 @endphp
 <div
-        x-data="autocompleteHandler2({ data: {!! $options !!}
+        x-data="autocompleteHandler2({ data: {{ $options }}
                 ,emptyOptionsMessage: 'No results found.'
                 , name: '{{$name}}'
                     , key: '{{$key}}'
