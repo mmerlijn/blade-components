@@ -5,7 +5,7 @@
     : "rounded border-gray-300 ";
 @endphp
 <div
-        x-data="tagInputHandler({ data: {!! $options !!}
+        x-data="tagInputHandler2({ data: {!! $options !!}
                 , emptyOptionsMessage: 'No results found.'
                 , name: '{{$name}}'
         , value: '{{$value}}'
@@ -17,7 +17,7 @@
         x-init="init()"
         @click.away="closeListbox()"
         @keydown.escape="closeListbox()"
-        {{ $attributes->merge(['class' => 'inline-flex items-start relative '.$classes.' rounded '])}}
+        {{ $attributes->merge(['class' => 'inline-flex items-start relative border '.$classes.' rounded '])}}
 >
     <div class="flex justify-items-end w-full">
         <div class="flex flex-wrap max-w-full">
@@ -96,7 +96,7 @@
                         role="option"
                         :aria-selected="focusedOptionIndex === index"
                         :class="{ 'text-white bg-indigo-600': index === focusedOptionIndex, 'text-gray-900': index !== focusedOptionIndex }"
-                        class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9"
+                        class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-8"
                 >
                                 <span
                                         x-text="item.{{$display}}"
@@ -114,3 +114,128 @@
     </div>
     <input type="hidden" x-model="selected.join(',')" name="{{$name}}">
 </div>
+<script>
+    window.tagInputHandler2 = function(config) {
+        return {
+            data: config.data,
+
+            emptyOptionsMessage: config.emptyOptionsMessage ?? 'No results match your search.',
+
+            focusedOptionIndex: null,
+
+            name: config.name,
+
+            open: false,
+
+            options: [],
+
+            placeholder: config.placeholder ?? 'Select an option',
+
+            search: '',
+
+            value: config.value,
+
+            selected: config.value.split(','), //[], //selected items
+
+            k: config.key??'l',
+            l: config.label??'l',
+            d: config.display ??'d',
+
+            closeListbox: function () {
+                this.open = false
+
+                this.focusedOptionIndex = null
+
+                this.search = ''
+            },
+
+            focusNextOption: function () {
+                if (this.focusedOptionIndex === null) return this.focusedOptionIndex = 0
+
+                if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) return
+
+                this.focusedOptionIndex++
+
+                this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+                    block: "center",
+                })
+            },
+
+            focusPreviousOption: function () {
+                if (this.focusedOptionIndex === null) return this.focusedOptionIndex = Object.keys(this.options).length - 1
+
+                if (this.focusedOptionIndex <= 0) return
+
+                this.focusedOptionIndex--
+
+                this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
+                    block: "center",
+                })
+            },
+
+            init: function () {
+                this.data = _.sortBy(this.data,this.d)
+                this.options = this.data
+
+                this.restoreOptions()
+
+                // filter selected items for existence in options
+                this.selected = this.data.reduce((result=[],dataItem)=>{
+                    if(this.selected.includes(dataItem[this.k])){
+                        result.push(dataItem[this.k])
+                    }
+                    return result
+                },[])
+
+                this.$watch('search', ((value) => {
+                    if (!this.open || !value) return this.restoreOptions()
+
+                    this.options = this.data
+                        .reduce((result=[],dataItem) => {
+                            if(!this.selected.includes(dataItem[this.k]) && dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
+                                result.push(dataItem)
+                            }
+                            return result
+                        }, [])
+
+                }))
+
+            },
+
+            selectOption: function () {
+                if (!this.open) return this.toggleListboxVisibility()
+                this.selected.push(this.options[this.focusedOptionIndex][this.k])
+                this.restoreOptions()
+                this.closeListbox()
+            },
+            removeItem: function(index){
+                if(this.open) this.closeListbox()
+                this.selected.splice(index,1)
+                this.restoreOptions()
+            },
+            restoreOptions: function(){
+                this.options = this.data.reduce((result=[],dataItem)=>{
+                    if(!this.selected.includes(dataItem[this.k])){
+                        result.push(dataItem)
+                    }
+                    return result
+                },[])
+
+            },
+            toggleListboxVisibility: function () {
+                if (this.open) return this.closeListbox()
+
+                if (this.focusedOptionIndex < 0) this.focusedOptionIndex = 0
+
+                this.open = true
+
+                this.$nextTick(() => {
+                    this.$refs.search.focus()
+                    this.$refs.listbox.children[this.focusedOptionIndex+1].scrollIntoView({
+                        block: "nearest"
+                    })
+                })
+            },
+        }
+    }
+</script>
