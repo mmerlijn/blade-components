@@ -22,7 +22,7 @@
                       >
                             <span
                                     x-show="! open"
-                                    x-text="value  ? show.{{$display}} : placeholder"
+                                    x-text="(value!=='') ? show.{{$display}} : placeholder"
                                     :class="{ 'text-gray-500': ! (value in options) }"
                                     class="block truncate"
                             ></span>

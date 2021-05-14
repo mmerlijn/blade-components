@@ -232,10 +232,12 @@ window.autocompleteHandler =     function(config) {
         init: function () {
             this.options = this.data
 
-            if(!this.data.some(item => item[this.k] === this.value)){
-                this.value='';
-            }else{
-                this.show = this.data.find(item=>item.k === this.value)
+            if(this.value) {
+                if (!this.data.some(item => item[this.k] === this.value)) {
+                    this.value = '';
+                } else {
+                    this.show = this.data.find(item => item.k === this.value)
+                }
             }
             this.$watch('search', ((value) => {
                 if (!this.open || !value) return this.options = this.data
