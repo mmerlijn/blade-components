@@ -121,13 +121,13 @@ window.tagInputHandler = function(config) {
             this.$watch('search', ((value) => {
                 if (!this.open || !value) return this.restoreOptions()
 
-                this.options = this.data
+                this.options = _.sortBy(this.data
                     .reduce((result=[],dataItem) => {
                         if(!this.selected.includes(dataItem[this.k]) && dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
                             result.push(dataItem)
                         }
                         return result
-                    }, [])
+                    }, []),'d')
 
             }))
 
@@ -145,12 +145,12 @@ window.tagInputHandler = function(config) {
             this.restoreOptions()
         },
         restoreOptions: function(){
-            this.options = this.data.reduce((result=[],dataItem)=>{
+            this.options = _.sortBy(this.data.reduce((result=[],dataItem)=>{
                 if(!this.selected.includes(dataItem[this.k])){
                     result.push(dataItem)
                 }
                 return result
-            },[])
+            },[]),'d')
 
         },
         toggleListboxVisibility: function () {
@@ -240,15 +240,15 @@ window.autocompleteHandler =     function(config) {
                 }
             }
             this.$watch('search', ((value) => {
-                if (!this.open || !value) return this.options = this.data
+                if (!this.open || !value) return this.options = _.sortBy(this.data,'d')
 
-                this.options = this.data
+                this.options = _.sortBy(this.data
                     .reduce((result=[],dataItem) => {
                         if(dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
                             result.push(dataItem)
                         }
                         return result
-                    }, [])
+                    }, []),'d')
             }))
         },
 

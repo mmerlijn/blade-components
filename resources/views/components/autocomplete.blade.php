@@ -1,6 +1,6 @@
 @props(['name','options'=>[],'value'=>'','placeholder'=>'Select item','key'=>'k','display'=>'d'])
 <div
-        x-data="autocompleteHandler({ data: {{$options}}
+        x-data="autocompleteHandler({ data: {!! $options !!}
             ,emptyOptionsMessage: 'No results found.'
             , name: '{{$name}}'
                     , key: '{{$key}}'
