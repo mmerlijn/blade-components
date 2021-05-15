@@ -55,7 +55,7 @@
                 </span>
 
         <div
-                x-show="open"
+                x-show="search.length >0 && open"
                 x-transition:leave="transition ease-in duration-100"
                 x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0"
@@ -103,7 +103,7 @@
                 </template>
 
                 <div
-                        x-show="! Object.keys(options).length"
+                        x-show="! options.length"
                         x-text="emptyOptionsMessage"
                         class="px-3 py-2 text-gray-900 cursor-default select-none"></div>
             </ul>
@@ -182,6 +182,13 @@
                 this.$watch('search', ((value) => {
                     if (!this.open || !value) return this.options = this.data
 
+                    this.options  = this.data.filter((option) => {
+                        return option.naam
+                            .toString()
+                            .toLowerCase()
+                            .indexOf(this.value.toLowerCase()) >= 0
+                    })
+                    /*
                     this.options = this.data
                         .reduce((result=[],dataItem) => {
                             if(dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
@@ -189,6 +196,8 @@
                             }
                             return result
                         }, [])
+
+                     */
                 }))
             },
 

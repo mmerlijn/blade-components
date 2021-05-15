@@ -4,41 +4,46 @@
     ? "rounded border-red-600"
     : "rounded border-gray-300 ";
 @endphp
-<div
-        x-data="tagInputHandler2({ data:  {{ $options }}
-                , emptyOptionsMessage: 'No results found.'
-                , name: '{{$name}}'
+<div class="flex d-inline-flex">
+    <div class="relative">
+
+
+        <div
+                x-data="tagInputHandler2({ data:  {{ $options }}
+                        , emptyOptionsMessage: 'No results found.'
+                        , name: '{{$name}}'
         , value: '{{$value}}'
         , placeholder: '{{$placeholder}}'
         , key: '{{$key??$label}}'
         , label: '{{$label}}'
         , display: '{{$display}}'
          })"
-        x-init="init()"
-        @click.away="closeListbox()"
-        @keydown.escape="closeListbox()"
-        {{ $attributes->merge(['class' => 'inline-flex items-start relative border '.$classes.' rounded '])}}
->
-    <div class="flex justify-items-end w-full">
-        <div class="flex flex-wrap max-w-full">
-            <template x-for="(item, index) in selected" :key="index">
-                <div class="flex justify-center items-center m-1 py-1 px-2 bg-white rounded-lg text-{{$color}}-700 bg-{{$color}}-100 border border-{{$color}}-300 ">
-                    <div class=" leading-none max-w-full flex-initial" x-text="item"></div>
-                    <div class="flex flex-auto flex-row-reverse">
-                        <div @click="removeItem(index)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 class="cursor-pointer hover:text-{{$color}}-400 hover:bg-{{$color}}-600 rounded-full text-{{$color}}-700 bg-{{$color}}-400 w-4 h-4 ml-2">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
+                x-init="init()"
+                @click.away="closeListbox()"
+                @keydown.escape="closeListbox()"
+                {{ $attributes->merge(['class' => 'relative items-start relative border '.$classes.' rounded '])}}
+        >
+            <div class="flex justify-items-end w-full">
+                <div class="flex flex-wrap max-w-full">
+                    <template x-for="(item, index) in selected" :key="index">
+                        <div class="flex justify-center items-center m-1 py-1 px-2 bg-white rounded-lg text-{{$color}}-700 bg-{{$color}}-100 border border-{{$color}}-300 ">
+                            <div class=" leading-none max-w-full flex-initial" x-text="item"></div>
+                            <div class="flex flex-auto flex-row-reverse">
+                                <div @click="removeItem(index)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round"
+                                         stroke-linejoin="round"
+                                         class="cursor-pointer hover:text-{{$color}}-400 hover:bg-{{$color}}-600 rounded-full text-{{$color}}-700 bg-{{$color}}-400 w-4 h-4 ml-2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
-            </template>
-        </div>
-        <span class="rounded-md shadow-sm h-full w-72">
+                <span class="rounded-md shadow-sm h-full w-72">
                       <div
                               x-ref="button"
                               @click="toggleListboxVisibility()"
@@ -67,55 +72,57 @@
                             </span>
                       </div>
                 </span>
-    </div>
+            </div>
 
-    <div
-            x-show="open"
-            x-transition:leave="transition ease-in duration-100"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            x-cloak
-            class="absolute mt-12 z-10 w-full bg-white rounded-md shadow-lg"
-    >
-        <ul
-                x-ref="listbox"
-                @keydown.enter.stop.prevent="selectOption()"
-                @keydown.arrow-up.prevent="focusPreviousOption()"
-                @keydown.arrow-down.prevent="focusNextOption()"
-                role="listbox"
-                :aria-activedescendant="focusedOptionIndex ? name + 'Option' + focusedOptionIndex : null"
-                tabindex="-1"
-                class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none leading-5"
-        >
-            <template x-for="(item, index) in options" :key="index">
-                <li
-                        :id="name + 'Option' + focusedOptionIndex"
-                        @click="selectOption()"
-                        @mouseenter="focusedOptionIndex = index"
-                        @mouseleave="focusedOptionIndex = null"
-                        role="option"
-                        :aria-selected="focusedOptionIndex === index"
-                        :class="{ 'text-white bg-indigo-600': index === focusedOptionIndex, 'text-gray-900': index !== focusedOptionIndex }"
-                        class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-8"
+            <div
+                    x-show="open"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    x-cloak
+                    class="absolute mt-12 z-10 w-full bg-white rounded-md shadow-lg"
+            >
+                <ul
+                        x-ref="listbox"
+                        @keydown.enter.stop.prevent="selectOption()"
+                        @keydown.arrow-up.prevent="focusPreviousOption()"
+                        @keydown.arrow-down.prevent="focusNextOption()"
+                        role="listbox"
+                        :aria-activedescendant="focusedOptionIndex ? name + 'Option' + focusedOptionIndex : null"
+                        tabindex="-1"
+                        class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none leading-5"
                 >
+                    <template x-for="(item, index) in options" :key="index">
+                        <li
+                                :id="name + 'Option' + focusedOptionIndex"
+                                @click="selectOption()"
+                                @mouseenter="focusedOptionIndex = index"
+                                @mouseleave="focusedOptionIndex = null"
+                                role="option"
+                                :aria-selected="focusedOptionIndex === index"
+                                :class="{ 'text-white bg-indigo-600': index === focusedOptionIndex, 'text-gray-900': index !== focusedOptionIndex }"
+                                class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-8"
+                        >
                                 <span
                                         x-text="item.{{$display}}"
                                         :class="{ 'font-semibold': index === focusedOptionIndex, 'font-normal': index !== focusedOptionIndex }"
                                         class="block font-normal truncate"
                                 ></span>
-                </li>
-            </template>
+                        </li>
+                    </template>
 
-            <div
-                    x-show="!options.length"
-                    x-text="emptyOptionsMessage"
-                    class="px-3 py-2 text-gray-900 cursor-default select-none"></div>
-        </ul>
+                    <div
+                            x-show="!options.length"
+                            x-text="emptyOptionsMessage"
+                            class="px-3 py-2 text-gray-900 cursor-default select-none"></div>
+                </ul>
+            </div>
+            <input type="hidden" x-model="selected.join(',')" name="{{$name}}">
+        </div>
     </div>
-    <input type="hidden" x-model="selected.join(',')" name="{{$name}}">
 </div>
 <script>
-    window.tagInputHandler2 = function(config) {
+    window.tagInputHandler2 = function (config) {
         return {
             data: config.data,
 
@@ -137,9 +144,9 @@
 
             selected: config.value.split(','), //[], //selected items
 
-            k: config.key??'l',
-            l: config.label??'l',
-            d: config.display ??'d',
+            k: config.key ?? 'l',
+            l: config.label ?? 'l',
+            d: config.display ?? 'd',
 
             closeListbox: function () {
                 this.open = false
@@ -174,25 +181,25 @@
             },
 
             init: function () {
-                this.data = _.sortBy(this.data,this.d)
+                this.data = _.sortBy(this.data, this.d)
                 this.options = this.data
 
                 this.restoreOptions()
 
                 // filter selected items for existence in options
-                this.selected = this.data.reduce((result=[],dataItem)=>{
-                    if(this.selected.includes(dataItem[this.k])){
+                this.selected = this.data.reduce((result = [], dataItem) => {
+                    if (this.selected.includes(dataItem[this.k])) {
                         result.push(dataItem[this.k])
                     }
                     return result
-                },[])
+                }, [])
 
                 this.$watch('search', ((value) => {
                     if (!this.open || !value) return this.restoreOptions()
 
                     this.options = this.data
-                        .reduce((result=[],dataItem) => {
-                            if(!this.selected.includes(dataItem[this.k]) && dataItem[this.d].toLowerCase().includes(value.toLowerCase())){
+                        .reduce((result = [], dataItem) => {
+                            if (!this.selected.includes(dataItem[this.k]) && dataItem[this.d].toLowerCase().includes(value.toLowerCase())) {
                                 result.push(dataItem)
                             }
                             return result
@@ -208,18 +215,18 @@
                 this.restoreOptions()
                 this.closeListbox()
             },
-            removeItem: function(index){
-                if(this.open) this.closeListbox()
-                this.selected.splice(index,1)
+            removeItem: function (index) {
+                if (this.open) this.closeListbox()
+                this.selected.splice(index, 1)
                 this.restoreOptions()
             },
-            restoreOptions: function(){
-                this.options = this.data.reduce((result=[],dataItem)=>{
-                    if(!this.selected.includes(dataItem[this.k])){
+            restoreOptions: function () {
+                this.options = this.data.reduce((result = [], dataItem) => {
+                    if (!this.selected.includes(dataItem[this.k])) {
                         result.push(dataItem)
                     }
                     return result
-                },[])
+                }, [])
 
             },
             toggleListboxVisibility: function () {
@@ -231,7 +238,7 @@
 
                 this.$nextTick(() => {
                     this.$refs.search.focus()
-                    this.$refs.listbox.children[this.focusedOptionIndex+1].scrollIntoView({
+                    this.$refs.listbox.children[this.focusedOptionIndex + 1].scrollIntoView({
                         block: "nearest"
                     })
                 })
